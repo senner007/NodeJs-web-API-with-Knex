@@ -9,8 +9,6 @@
  });
 
  router.post('/', function(req, res) {  
-   // INSERT INTO tablename(column1, column2) VALUES (column1_value, column2_value);
-   // SELECT * FROM table WHERE id = inserted_row;
    db.insert(req.body).returning('*').into('todo').then(function(data) {
      res.send(data)
    })
