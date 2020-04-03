@@ -4,17 +4,36 @@ import axios from 'axios';
 const SingleTodoEdit = (props) => {
   const [title, setTitle] = useState(props.title || '');
   const [isDone, setIsDone] = useState( props.isDone || false);
-  const onEdit = props.onEdit;
+  const toggleEdit = props.toggleEdit;
+  const updateTodo = props.updateTodo;
 
   const onChangeItem = (e) => {
-    setTitle(e.target.value);
+    if(e.target.tagName === 'INPUT'){
+      setTitle(e.target.value);
+    } else if(e.target.tagName === 'SELECT') {
+      setIsDone(e.target.value)
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { id } = props;
+    if(id) {
+      axios.put(`/api/todo/${id}`, {
+        title: title,
+        is_done: isDone === 'true'
+      }).then(() => {
+        updateTodo(title, isDone === 'true')
+        toggleEdit();
+      })
+    }
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label htmlFor="title">Title of todo</label>
-        <input name="title" type="text" className="form-control" id="title" value={title} onChange={(e) => onChangeItem(e)}/> 
+        <input name="title" type="text" className="form-control" id="title" value={title} onChange={onChangeItem}/> 
       </div>
       <div className="form-group">
         <label htmlFor="isDone">Todo completed?</label>
@@ -24,7 +43,7 @@ const SingleTodoEdit = (props) => {
         </select> 
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button type="submit" className="btn btn-primary">Submit</button>
-          <button type="button" className="btn btn-danger" onClick={onEdit}>Cancel</button>
+          <button type="button" className="btn btn-danger" onClick={toggleEdit}>Cancel</button>
         </div>
       </div>
     </form>
