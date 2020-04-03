@@ -16,10 +16,6 @@ const TodoCard = (props) => {
     setIsDone(isDone);
   }
 
-  const onDelete = () => {
-    console.log('deleted')
-  }
-
   if (editing) {
     return <CreateEditTodo title={title} isDone={isDone} toggleEdit={toggleEdit} id={props.id} updateTodo={updateTodo}/>
   } else {

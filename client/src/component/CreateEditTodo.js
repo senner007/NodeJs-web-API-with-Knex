@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { withRouter } from 'react-router-dom'
 
 const SingleTodoEdit = (props) => {
   const [title, setTitle] = useState(props.title || '');
@@ -17,7 +18,7 @@ const SingleTodoEdit = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { id } = props;
+    const { id, history } = props;
     if(id) {
       axios.put(`/api/todo/${id}`, {
         title: title,
@@ -25,6 +26,10 @@ const SingleTodoEdit = (props) => {
       }).then(() => {
         updateTodo(title, isDone === 'true')
         toggleEdit();
+      })
+    } else {
+      axios.post('/api/todo', {title: title, is_done: isDone === 'true' }).then(() => {
+        history.push('/')
       })
     }
   }
@@ -50,4 +55,4 @@ const SingleTodoEdit = (props) => {
   )
 }
 
-export default SingleTodoEdit
+export default withRouter(SingleTodoEdit)

@@ -21,7 +21,7 @@ const ItemsBody = (props) => {
   const renderTodos = () => {
     return _.map(todos, todo => {
       return todo.title ? (
-        <ListItem title={todo.title} isDone={todo.is_done} key={todo.id}/> 
+        <ListItem title={todo.title} isDone={todo.is_done} key={todo.id} id={todo.id} /> 
         ) : null;
     });
   }

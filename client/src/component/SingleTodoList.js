@@ -1,6 +1,16 @@
 import React from 'react'
+import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
-const SingleTodoList = ({ title, isDone, toggleEdit }) => {
+const SingleTodoList = ({ title, isDone, toggleEdit, id, history }) => {
+
+  const onDelete = (id) => {
+    console.log('I should be deleted')
+    axios.delete(`api/todo/${id}`).then(() => {
+      history.push('/');
+    })
+  }
+
   return (
     <div className={`card ${isDone ? 'bg-success' : 'bg-danger'} text-white` }>
       <div className="card-block">
@@ -11,13 +21,12 @@ const SingleTodoList = ({ title, isDone, toggleEdit }) => {
           {isDone ? "This todo has been completed" : "This todo has yet to be finished"}
         </div>
         <div className="d-flex justify-content-between align-items-end mt-5">
-          <button className="btn btn-link text-white">Delete</button>
+          <button className="btn btn-link text-white" onClick={onDelete}>Delete</button>
           <button className="btn btn-link text-white" onClick={toggleEdit}>Edit</button>
         </div>
       </div>
-      
     </div>
   )
 }
 
-export default SingleTodoList
+export default withRouter(SingleTodoList)
