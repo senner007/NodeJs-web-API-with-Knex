@@ -9,11 +9,10 @@ const TodoCard = (props) => {
 
   const onEdit = () => {
     setEditing(!editing);
-    console.log(editing);
   }
 
   if (editing) {
-    return <CreateEditTodo title={title} isDone={isDone} onCancel={onEdit} />
+    return <CreateEditTodo title={title} isDone={isDone} onEdit={onEdit} />
   } else {
     return <SingleTodoList title={title} isDone={isDone} onEdit={onEdit} />
   }

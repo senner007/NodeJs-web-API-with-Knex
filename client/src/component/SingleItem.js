@@ -10,17 +10,18 @@ const SingleItem = (props) => {
     const { match } = props;
     const id =  match.params.id;
     console.log(id);
-    async function getTodoItem() {
-      let todo = await axios.get(`/api/todo/${id}`);
-      try {
-        setTodo(todo.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getTodoItem();
+    getTodoItem(id);
+    setLoading(false);
   }, [])
+
+  const getTodoItem = async (id) => {
+    try {
+      let todo = await axios.get(`/api/todo/${id}`);
+      setTodo(todo.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return ( 
     <div>

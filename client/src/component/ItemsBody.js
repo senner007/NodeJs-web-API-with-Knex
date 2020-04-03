@@ -9,13 +9,14 @@ const ItemsBody = (props) => {
   const [todos, setTodos] = useState({});
 
   useEffect( () => {
-    async function getTodos() {
-      const TodoList = await axios.get('/api/todo');
-      setLoading(false);
-      setTodos(TodoList.data)
-    }
     getTodos();
+    setLoading(false);
   }, [])
+
+  const getTodos = async () => {
+    const TodoList = await axios.get('/api/todo');
+    setTodos(TodoList.data)
+  }
   
   const renderTodos = () => {
     return _.map(todos, todo => {

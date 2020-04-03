@@ -4,21 +4,17 @@ import axios from 'axios';
 const SingleTodoEdit = (props) => {
   const [title, setTitle] = useState(props.title || '');
   const [isDone, setIsDone] = useState( props.isDone || false);
+  const onEdit = props.onEdit;
 
   const onChangeItem = (e) => {
-    const target = e.target;
-    const name = target.name;
-
-    setTitle({
-      [name]: target.value
-    });
+    setTitle(e.target.value);
   }
 
   return (
     <form>
       <div className="form-group">
         <label htmlFor="title">Title of todo</label>
-        <input name="title" type="text" className="form-control" id="title" value={title} onChange={onChangeItem}/> 
+        <input name="title" type="text" className="form-control" id="title" value={title} onChange={(e) => onChangeItem(e)}/> 
       </div>
       <div className="form-group">
         <label htmlFor="isDone">Todo completed?</label>
@@ -28,7 +24,7 @@ const SingleTodoEdit = (props) => {
         </select> 
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button type="submit" className="btn btn-primary">Submit</button>
-          <button type="button" className="btn btn-danger">Cancel</button>
+          <button type="button" className="btn btn-danger" onClick={onEdit}>Cancel</button>
         </div>
       </div>
     </form>
