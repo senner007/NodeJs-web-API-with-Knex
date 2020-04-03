@@ -19,21 +19,16 @@ const ItemsBody = (props) => {
   
   const renderTodos = () => {
     return _.map(todos, todo => {
-      return (
-        <ListItem title={todo.title} isDone={todo.is_done} key={todo.id}/>
-      )
-    })
+      return todo.title ? (
+        <ListItem title={todo.title} isDone={todo.is_done} key={todo.id}/> 
+        ) : null;
+    });
   }
 
-  if (loading === true) {
-   return (
-     <h1>Loading...</h1>
-   ) 
-  }
   return (
-    <ListItems>
-       {renderTodos()}
-    </ListItems>
+    <div>
+      { loading ? <h1>Loading...</h1> : <ListItems>{renderTodos()}</ListItems>}
+    </div>
   )
 }
 
