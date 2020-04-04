@@ -1,15 +1,7 @@
 import React, { useState } from 'react'
-import SingleTodoList from './SingleTodoList'
-import CreateTodo from './CreateTodo'
-import axios from 'axios'
 
 
-function TodoDescription({onDeleteTodo, title, isDone}) {
-
-//   const [title, setTitle] = useState(props.title);
-//   const [isDone, setIsDone] = useState(props.isDone);
-// console.log(onDeleteTodo)
-
+function TodoDescription({title, isDone}) {
   return (
     <div className={`card ${isDone ? 'bg-success' : 'bg-danger'} text-white` }>
       <div className="card-block">
@@ -24,7 +16,6 @@ function TodoDescription({onDeleteTodo, title, isDone}) {
       </div>
     </div>
   )
-
 }
 
 export default TodoDescription

@@ -1,9 +1,20 @@
-import React from 'react'
-import CreateEditTodo from './CreateEditTodo'
+import React, { useState } from 'react'
+import TodoForm from './TodoForm'
+import axios from 'axios';
 
-const CreateTodo = () => {
+const CreateTodo = (props) => {
+
+    const createTodo = (title, isDone, ) => {
+      const { history } = props;
+  
+      axios.post('/api/todo', {title: title, is_done: isDone === 'true' }).then(() => {
+          console.log(history)
+          history.push('/')
+      })
+      
+    }
   return (
-    <CreateEditTodo />
+    <TodoForm submitTodo={createTodo}/>
   )
 }
 

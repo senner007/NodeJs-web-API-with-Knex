@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ListItems = ({ children }) => {
+const TodoList = ({ children }) => {
   return (
     <ul className = "list-group">
        { children }
@@ -8,4 +8,4 @@ const ListItems = ({ children }) => {
   )
 }
 
-export default ListItems
+export default TodoList

@@ -21,6 +21,7 @@
  })
 
  router.put('/:id', function (req, res) {
+   console.log("putting...")
    db('todo').where({ id: req.params.id }).update({
      title: req.body.title || null,
      is_done: req.body.is_done || null
@@ -30,6 +31,7 @@
  })
 
  router.delete('/:id', function (req, res) {
+   console.log(req.params.id)
    db('todo').where({ id: req.params.id }).del().then(function () {
      res.json({ success: true });
    })
