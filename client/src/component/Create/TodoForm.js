@@ -12,9 +12,9 @@ const TodoForm = (props) => {
     const onIsDoneChange = e =>
       setIsDone(e.target.value);
 
-    const submit = (e, title, isDone) => {
+    const submit = async (e, title, isDone) => {
       e.preventDefault();
-      props.submitTodo(title, isDone);
+      await props.submitTodo(title, isDone);
       props.submitResponse();
     }
 

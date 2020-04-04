@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Loader from '../Loader'
 import TodoView from "./TodoView"
 import TodoForm from "../Create/TodoForm"
 import { withRouter } from 'react-router-dom'
-import TodoActions from "./TodoActions"
+import TodoActions from "./TodoActions";
+import TodoAjaxMethods from "../Helpers/TodoAjaxMethods"
 
 const Todo = ({ match, history }) => {
 
@@ -13,25 +13,13 @@ const Todo = ({ match, history }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [todo, setTodo] = useState({})
 
-  const id = match.params.id;
+  const ajaxMethods = TodoAjaxMethods(match, history);
 
   const toggleEdit = () => 
     setIsEditMode(prev => !prev);
 
-  const deleteTodo = async () => {
-    await axios.delete(`${id}`);
-    history.push('/');
-  }
-  
-  const editTodo = async (title, isDone) => {
-    await axios.put(`/api/todo/${id}`, {
-        title: title,
-        is_done: isDone === 'true'
-    });
-  }
-
   useEffect(() => {
-    getTodoById(id, setLoading)
+    ajaxMethods.getById(setLoading)
       .then(todo => setTodo(todo))
   }, [isEditMode])
 
@@ -43,14 +31,14 @@ const Todo = ({ match, history }) => {
             ? <TodoForm
                 isDone={todo.is_done}
                 title={todo.title} 
-                submitTodo={editTodo}
+                submitTodo={ajaxMethods.editTodo}
                 toggleEdit={toggleEdit}
                 submitResponse={toggleEdit}
               />
             : <TodoView 
                 isDone={todo.is_done} 
                 title={todo.title}>
-                  <TodoActions onDelete={deleteTodo} toggleEdit={toggleEdit}/>
+                  <TodoActions onDelete={ajaxMethods.deleteTodo} toggleEdit={toggleEdit}/>
               </TodoView>        
         }      
       </Loader>
@@ -58,15 +46,5 @@ const Todo = ({ match, history }) => {
   )
 }
 
-const getTodoById = async (id, setLoading) => {
-  try {
-    setLoading(true);
-    let todo = await axios.get(`/api/todo/${id}`);
-    setLoading(false);
-    return todo.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 export default withRouter(Todo);
