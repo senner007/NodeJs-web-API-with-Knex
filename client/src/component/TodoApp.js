@@ -5,7 +5,7 @@ import Todo from './Todo';
 import CreateTodo from './CreateTodo';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-function App() {
+function TodoApp() {
   return (
     <BrowserRouter>
       <div>
@@ -22,4 +22,4 @@ function App() {
   );
 } 
 
-export default App;
+export default TodoApp;
