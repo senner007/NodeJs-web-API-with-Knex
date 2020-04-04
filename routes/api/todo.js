@@ -1,6 +1,6 @@
  const express = require('express');
  const router = express.Router();
- const db = require('../../database');
+ const db = require('../../database/dbconfig');
 
  router.get('/', function(req, res) {
    db.select().from('todo').orderBy('id').then(function(data) {

@@ -3,6 +3,8 @@ const knex = require('knex')({
   connection: {
     host: 'localhost',
     database: 'todo_db',
+    user : 'postgres',
+    password :'mysecretpassword'
   }
 })
 
