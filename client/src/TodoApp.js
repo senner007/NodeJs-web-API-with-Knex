@@ -1,8 +1,8 @@
 import React from 'react';
-import TopNav from './TopNav';
-import TodosListDisplay from './TodosListDisplay';
-import Todo from './Todo';
-import CreateTodo from './CreateTodo';
+import TopNav from './component/TopNav';
+import TodosListDisplay from './component/TodoList/TodosListDisplay';
+import Todo from './component/Todo/Todo';
+import TodoMake from './component/Create/TodoMake';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function TodoApp() {
@@ -12,7 +12,7 @@ function TodoApp() {
         <TopNav />
         <div className="container">
           <Switch>
-            <Route path="/new" component={CreateTodo} /> 
+            <Route path="/new" component={TodoMake} /> 
             <Route path="/api/todo/:id" component={Todo} /> 
             <Route path="/" exact component={TodosListDisplay} />
           </Switch>

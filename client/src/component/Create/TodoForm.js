@@ -14,7 +14,8 @@ const TodoForm = (props) => {
 
     const submit = (e, title, isDone) => {
       e.preventDefault();
-      props.submitTodo(title, isDone)
+      props.submitTodo(title, isDone);
+      props.submitResponse();
     }
 
     return (
@@ -36,7 +37,6 @@ const TodoForm = (props) => {
         </div>
       </form>
     )
-
 }
 
 export default withRouter(TodoForm)
