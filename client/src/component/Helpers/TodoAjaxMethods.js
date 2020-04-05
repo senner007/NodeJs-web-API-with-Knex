@@ -25,7 +25,7 @@ const TodoAjaxMethods = (loader) => {
   
     const getById = async (id) => {
       try {
-        let todo = await axios.get(`/api/todo/${id}`);
+        const todo = await axios.get(`/api/todo/${id}`);
         return todo.data;
       } catch (err) {
         console.log(err);
