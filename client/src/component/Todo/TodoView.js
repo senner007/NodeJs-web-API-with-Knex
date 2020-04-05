@@ -7,7 +7,7 @@ function TodoView({title, isDone, children}) {
         ? 'bg-success' 
         : 'bg-danger'
       } text-white` }>
-      <div className="card-block">
+      <div className="card-block p-3">
         <div className="card-title">
           <h4>{title}</h4>
         </div>
@@ -17,10 +17,10 @@ function TodoView({title, isDone, children}) {
               ? "This todo has been completed" 
               : "This todo has yet to be finished"}
         </div>
-        {
+      </div>
+      {
           children
         }
-      </div>
     </div>
   )
 }

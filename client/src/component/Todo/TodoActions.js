@@ -9,8 +9,8 @@ const TodoActions = ({onDelete, toggleEdit, deleteResponse}) => {
 
     return (
       <div className="d-flex justify-content-between align-items-end mt-5">
-        <button className="btn btn-link text-white" onClick={onDeleteAction}>Delete</button>
-        <button className="btn btn-link text-white" onClick={toggleEdit}>Edit</button>
+        <button className="btn btn-link pl-3 text-white" onClick={onDeleteAction}>Delete</button>
+        <button className="btn btn-link pr-3 text-white" onClick={toggleEdit}>Edit</button>
       </div>
     )
 }
