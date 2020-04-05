@@ -13,13 +13,14 @@ const Todo = ({ match, history }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [todo, setTodo] = useState({})
 
-  const ajaxMethods = TodoAjaxMethods(setLoading, match.params.id);
+  const id = match.params.id;
+  const ajaxMethods = TodoAjaxMethods(setLoading);
 
   const toggleEdit = () => 
     setIsEditMode(prev => !prev);
 
   useEffect(() => {
-    ajaxMethods.getById()
+    ajaxMethods.getById(id)
       .then(todo => setTodo(todo))
   }, [isEditMode])
 
@@ -31,7 +32,7 @@ const Todo = ({ match, history }) => {
             ? <TodoForm
                 isDone={todo.is_done}
                 title={todo.title} 
-                submitTodo={ajaxMethods.editTodo}
+                submitTodo={ajaxMethods.editTodo.bind(null, id)}
                 toggleEdit={toggleEdit}
                 submitResponse={toggleEdit}
               />
@@ -39,7 +40,7 @@ const Todo = ({ match, history }) => {
                 isDone={todo.is_done} 
                 title={todo.title}>
                   <TodoActions 
-                  onDelete={ajaxMethods.deleteTodo} 
+                  onDelete={ajaxMethods.deleteTodo.bind(null, id)} 
                   deleteResponse={HistoryAction(history).goToRoot} 
                   toggleEdit={toggleEdit}/>
               </TodoView>        

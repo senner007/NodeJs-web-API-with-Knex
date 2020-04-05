@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const TodoAjaxMethods = (loader, id) => {
+const TodoAjaxMethods = (loader) => {
 
     function loaderWrapper (cb) {
       return async (...params) => {
@@ -24,7 +24,7 @@ const TodoAjaxMethods = (loader, id) => {
       }
     }
   
-    const getById = async () => {
+    const getById = async (id) => {
       try {
         let todo = await axios.get(`/api/todo/${id}`);
         return todo.data;
@@ -33,7 +33,7 @@ const TodoAjaxMethods = (loader, id) => {
       }
     }
   
-    const deleteTodo = async () => {
+    const deleteTodo = async (id) => {
       try {
         await axios.delete(`${id}`);
       } catch (err) {
@@ -41,7 +41,7 @@ const TodoAjaxMethods = (loader, id) => {
       }
     }
     
-    const editTodo = async (title, isDone) => {
+    const editTodo = async (id, title, isDone) => {
       try {
         await axios.put(`/api/todo/${id}`, {
           title: title,
