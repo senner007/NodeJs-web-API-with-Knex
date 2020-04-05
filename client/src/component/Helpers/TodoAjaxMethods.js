@@ -1,17 +1,35 @@
 import axios from 'axios'
 
-const TodoAjaxMethods = (match, history) => {
+const TodoAjaxMethods = (loader, id) => {
 
-    const id = match.params.id;
-  
-    const getById = async (setLoading) => {
+    function loaderWrapper (cb) {
+      return async (...params) => {
+        loader(true);
+        const result = await cb(...params);
+        loader(false);
+        return result;
+      }
+    }
+
+    const createTodo = async (title, isDone) => {
+      console.log("creating")
       try {
-        setLoading(true);
+        await axios.post('/api/todo', 
+        {
+          title: title, 
+          is_done: isDone === 'true' 
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  
+    const getById = async () => {
+      try {
         let todo = await axios.get(`/api/todo/${id}`);
-        setLoading(false);
         return todo.data;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     }
   
@@ -21,7 +39,6 @@ const TodoAjaxMethods = (match, history) => {
       } catch (err) {
         console.log(err)
       }
-      history.push('/');
     }
     
     const editTodo = async (title, isDone) => {
@@ -36,9 +53,10 @@ const TodoAjaxMethods = (match, history) => {
     }
   
     return {
-      getById,
-      deleteTodo,
-      editTodo
+      getById : loaderWrapper(getById),
+      deleteTodo : loaderWrapper(deleteTodo),
+      editTodo : loaderWrapper(editTodo),
+      createTodo : loaderWrapper(createTodo)
     }
   } 
 

@@ -5,21 +5,21 @@ import TodoForm from "../Create/TodoForm"
 import { withRouter } from 'react-router-dom'
 import TodoActions from "./TodoActions";
 import TodoAjaxMethods from "../Helpers/TodoAjaxMethods"
+import HistoryAction from "../Helpers/HistoryAction"
 
 const Todo = ({ match, history }) => {
 
-  // TODO : should be a back button here
   const [isLoading, setLoading] = useState(true)
   const [isEditMode, setIsEditMode] = useState(false);
   const [todo, setTodo] = useState({})
 
-  const ajaxMethods = TodoAjaxMethods(match, history);
+  const ajaxMethods = TodoAjaxMethods(setLoading, match.params.id);
 
   const toggleEdit = () => 
     setIsEditMode(prev => !prev);
 
   useEffect(() => {
-    ajaxMethods.getById(setLoading)
+    ajaxMethods.getById()
       .then(todo => setTodo(todo))
   }, [isEditMode])
 
@@ -38,13 +38,15 @@ const Todo = ({ match, history }) => {
             : <TodoView 
                 isDone={todo.is_done} 
                 title={todo.title}>
-                  <TodoActions onDelete={ajaxMethods.deleteTodo} toggleEdit={toggleEdit}/>
+                  <TodoActions 
+                  onDelete={ajaxMethods.deleteTodo} 
+                  deleteResponse={HistoryAction(history).goToRoot} 
+                  toggleEdit={toggleEdit}/>
               </TodoView>        
         }      
       </Loader>
     </>
   )
 }
-
 
 export default withRouter(Todo);
