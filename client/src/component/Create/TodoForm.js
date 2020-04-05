@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
 
 const TodoForm = (props) => {
+
+    const todoTitleRef = useRef(null);
+
+    useEffect(() => {
+      todoTitleRef.current.focus();
+    }, []);
 
     const [title, setTitle] = useState(props.title || '');
     const [isDone, setIsDone] = useState( props.isDone || false);
@@ -22,7 +28,7 @@ const TodoForm = (props) => {
       <form onSubmit={(e) => submit(e, title, isDone)}>
         <div className="form-group">
           <label htmlFor="title">Title of todo</label>
-          <input name="title" type="text" className="form-control" id="title" value={title} onChange={onTitleChange}/> 
+          <input name="title" type="text" ref={todoTitleRef} className="form-control" id="title" value={title} onChange={onTitleChange}/> 
         </div>
         <div className="form-group">
           <label htmlFor="isDone">Todo completed?</label>
