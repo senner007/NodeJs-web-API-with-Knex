@@ -12,7 +12,6 @@ const TodoAjaxMethods = (loader) => {
     }
 
     const createTodo = async (title, isDone) => {
-      console.log("creating")
       try {
         await axios.post('/api/todo', 
         {
